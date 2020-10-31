@@ -7,10 +7,10 @@ from cl_formatting import Format
 pocket = AutoPocket()
 
 
-def compile_articles(newssites=['financial_times', 'guardian']):
+def compile_articles(newssites=['financial_times', 'guardian'], limit_per_site=10):
     compiled_articles = []
-    if 'financial_times' in newssites: compiled_articles += crawlers.financial_times(2)
-    if 'guardian' in newssites: compiled_articles += crawlers.guardian(2)
+    if 'financial_times' in newssites: compiled_articles += crawlers.financial_times(limit_per_site)
+    if 'guardian' in newssites: compiled_articles += crawlers.guardian(limit_per_site)
     return compiled_articles
 
 
@@ -54,8 +54,14 @@ def cli_exec(compiled_articles):
             pocket.add_article(article.url, article.title)
             print(f'\n{Format.BOLD}RESPONSE: {Format.END}Added to pocket\n')
 
-        if len(articles) == 0: break
+        if len(articles) == 0: 
+            print("All articles have been accounted for.\n")
+            print("Thanks for using AutoPocket.\n\n")
+            break
 
 if __name__ == '__main__':
-    articles = compile_articles()
+    newssites = [
+        'guardian'
+    ]
+    articles = compile_articles(newssites, limit_per_site=10)
     cli_exec(articles)

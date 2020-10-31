@@ -125,8 +125,8 @@ class AutoPocket:
             "url": url,
             "title": title,
             **self._payload}
-        req = requests.post(f'{self._url}/add', payload)
-        print('Article added to pocket.')
+        requests.post(f'{self._url}/add', payload)
+        return
 
 if __name__=='__main__':
     pkt = AutoPocket()
