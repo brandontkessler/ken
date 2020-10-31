@@ -2,7 +2,7 @@ from collections import deque
 
 import crawlers
 from pocket import AutoPocket
-from cli_formatting import Format
+from cl_formatting import Format
 
 pocket = AutoPocket()
 
