@@ -11,7 +11,7 @@ def aggregate_articles(soup_articles, prepend_url=None):
     articles = []
 
     for article in soup_articles:
-        article_title = article.get_text()
+        article_title = article.get_text().strip()
         article_url = f"{prepend_url}{article.get('href')}" if prepend_url else f"{article.get('href')}"
         
         articles.append(ArticleRecord(article_title, article_url))
