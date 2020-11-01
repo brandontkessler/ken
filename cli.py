@@ -1,14 +1,17 @@
 from collections import deque
 
-import crawlers
 from pocket import AutoPocket
+
+from crawlers.guardian import guardian
+from crawlers.vice import vice
 
 pocket = AutoPocket()
 
 
 def compile_articles(newssites=['financial_times', 'guardian'], limit_per_site=10):
     compiled_articles = []
-    if 'guardian' in newssites: compiled_articles += crawlers.guardian(limit_per_site)
+    if 'vice' in newssites: compiled_articles += vice(limit_per_site)
+    if 'guardian' in newssites: compiled_articles += guardian(limit_per_site)
     return compiled_articles
 
 
@@ -62,7 +65,8 @@ def cli_exec(compiled_articles):
 
 if __name__ == '__main__':
     newssites = [
-        'guardian'
+        'guardian',
+        'vice'
     ]
     articles = compile_articles(newssites, limit_per_site=10)
     cli_exec(articles)
