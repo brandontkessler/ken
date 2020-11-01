@@ -35,10 +35,7 @@ def cli_exec(compiled_articles):
     passed_articles = []
 
     while True:
-        if len(articles) == 1:
-            print('This is the last article')
-        else:
-            print(f'There are {len(articles)} articles left.')
+        print('This is the last article') if len(articles) == 1 else print(f'There are {len(articles)} articles left.')
 
         article = articles.popleft()
         print(f'\n-> {article.title}')
