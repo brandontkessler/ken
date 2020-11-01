@@ -2,24 +2,21 @@ import requests
 from bs4 import BeautifulSoup
 from collections import namedtuple
 
-ArticleRecord = namedtuple('ArticleRecord', 'title, url')
 
-# INCOMPLETE
-# def financial_times(limit=10):
-#     """Requires premium membership
-#     """
-#     url = 'https://www.ft.com'
-#     financial_times = requests.get(url)
-#     soup = BeautifulSoup(financial_times.content, 'html.parser')
-#     headlines = soup.findAll("a", {"class": "js-teaser-heading-link"}, limit=limit)
+def aggregate_articles(soup_articles):
+    """soup_articles should be a list of A tags
+    """
 
-#     articles = []
+    ArticleRecord = namedtuple('ArticleRecord', 'title, url')
+    articles = []
 
-#     for headline in headlines:
-#         article = ArticleRecord(headline.get_text(), f"{url}{headline.get('href')}")
-#         articles.append(article)
+    for article in soup_articles:
+        article_title = article.get_text()
+        article_url = f"{article.get('href')}"
+        
+        articles.append(ArticleRecord(article_title, article_url))
     
-#     return articles
+    return articles
 
 
 def guardian(limit=10):
@@ -39,16 +36,24 @@ def guardian(limit=10):
         ])
     ]
 
-    articles = []
-
-    for article in headline_articles:
-        article_title = article.get_text()
-        article_url = f"{article.get('href')}"
-        
-        articles.append(ArticleRecord(article_title, article_url))
+    articles = aggregate_articles(headline_articles)
     
     return articles[:limit]
 
 
+def vice(limit=10):
+    url = 'https://www.vice.com/en'
+    res = requests.get(url)
+    soup = BeautifulSoup(res.text, 'html.parser')
+
+
+    articles = soup.findAll('a', {'class': 'vice-card-hed__link'})
+
+    aggregate = aggregate_articles(articles)
+
+    return aggregate[:limit]
+
+    
 if __name__=='__main__':
-    guardian()
+    # guardian()
+    vice()

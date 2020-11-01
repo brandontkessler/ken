@@ -8,7 +8,6 @@ pocket = AutoPocket()
 
 def compile_articles(newssites=['financial_times', 'guardian'], limit_per_site=10):
     compiled_articles = []
-    if 'financial_times' in newssites: compiled_articles += crawlers.financial_times(limit_per_site)
     if 'guardian' in newssites: compiled_articles += crawlers.guardian(limit_per_site)
     return compiled_articles
 
