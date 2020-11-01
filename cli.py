@@ -5,12 +5,14 @@ from pocket import AutoPocket
 from crawlers.guardian import guardian
 from crawlers.vice import vice
 from crawlers.chess import chess
+from crawlers.economist import economist
 
 pocket = AutoPocket()
 
 
 def compile_articles(newssites, limit_per_site=10):
     compiled_articles = []
+    if 'economist' in newssites: compiled_articles += economist(limit_per_site)
     if 'chess' in newssites: compiled_articles += chess(limit_per_site)
     if 'vice' in newssites: compiled_articles += vice(limit_per_site)
     if 'guardian' in newssites: compiled_articles += guardian(limit_per_site)
@@ -64,9 +66,10 @@ def cli_exec(compiled_articles):
 
 if __name__ == '__main__':
     newssites = [
+        'economist',
         'guardian',
         'vice',
-        'chess'
+        'chess',
     ]
-    articles = compile_articles(newssites, limit_per_site=10)
+    articles = compile_articles(newssites, limit_per_site=20)
     cli_exec(articles)
