@@ -5,8 +5,6 @@ import json
 import webbrowser
 import time
 
-from cl_formatting import Format
-
 class AutoPocket:
     def __init__(self):
         self._url = 'https://getpocket.com/v3'
@@ -48,7 +46,7 @@ class AutoPocket:
             print("If it does not, copy the URL and paste it into a browser, then follow the instructions below...\n")
             time.sleep(2)
             webbrowser.open_new_tab('https://getpocket.com/developer/')
-            print(f"{Format.BOLD}DIRECTIONS: {Format.END}")
+            print("-> DIRECTIONS <-")
             print("* Click 'CREATE NEW APP'")
             print("* Name your application anything you want (mine is named AutoPocket)")
             print("* Enter anything for the description")
@@ -108,7 +106,7 @@ class AutoPocket:
         with open('.\config.json', 'w') as f:
             json.dump(keys, f, indent=4)
 
-        print(f'\n{Format.BOLD}Pocket is now configured.{Format.END}\n')
+        print('\n-> Pocket is now configured. <-\n')
         return access_token
 
     def get_articles(self, count=10):
