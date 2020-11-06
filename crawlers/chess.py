@@ -4,6 +4,7 @@ from .helpers import aggregate_articles
 
 
 def chess(limit=10):
+    src = 'Chess.com'
     url = 'https://www.chess.com/news'
     res = requests.get(url)
     soup = BeautifulSoup(res.text, 'html.parser')
@@ -17,10 +18,13 @@ def chess(limit=10):
         if 'day' in posted:
             stop_index = i
             break
-
-    filtered_articles = articles[:stop_index] if stop_index else articles
+    
+    # Stop index will be an integer if there is an article posted a day or more ago
+    #   otherwise stop index will be None indicating that all articles were posted today
+    #   meaning don't filter any articles on the page.
+    filtered_articles = articles[:stop_index] if isinstance(stop_index, int) else articles
     article_tags = [a.find('a', {'class': 'post-preview-title'}) for a in filtered_articles]
 
-    aggregate = aggregate_articles(article_tags)
+    aggregate = aggregate_articles(article_tags, source=src)
 
     return aggregate[:limit]

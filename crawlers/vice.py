@@ -4,6 +4,7 @@ from .helpers import aggregate_articles
 
 
 def vice(limit=10):
+    src = 'Vice'
     url = 'https://www.vice.com/en'
     res = requests.get(url)
     soup = BeautifulSoup(res.text, 'html.parser')
@@ -11,6 +12,6 @@ def vice(limit=10):
 
     articles = soup.findAll('a', {'class': 'vice-card-hed__link'})
 
-    aggregate = aggregate_articles(articles, prepend_url='https://www.vice.com')
+    aggregate = aggregate_articles(articles, source=src, prepend_url='https://www.vice.com')
 
     return aggregate[:limit]
