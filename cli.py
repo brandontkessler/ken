@@ -42,7 +42,7 @@ def cli_exec(compiled_articles):
         print('This is the last article') if len(articles) == 1 else print(f'There are {len(articles)} articles left.')
 
         article = articles.popleft()
-        print(f'\n-> {article.title}')
+        print(f'\n-> {article.source} -- {article.title}')
         decision = input('Do you want to add this to pocket?\n').lower()
 
         if decision in user_skip:
@@ -68,10 +68,10 @@ def cli_exec(compiled_articles):
 
 if __name__ == '__main__':
     newssites = [
-        'vox',
+        # 'vox',
         'economist',
         'guardian',
-        'vice',
+        # 'vice',
         'chess',
     ]
     articles = compile_articles(newssites, limit_per_site=20)

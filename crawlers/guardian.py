@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from .helpers import aggregate_articles
 
 def guardian(limit=10):
+    src = 'Guardian'
     url = 'https://www.theguardian.com/us'
     guardian = requests.get(url)
     soup = BeautifulSoup(guardian.content, 'html.parser')
@@ -19,6 +20,6 @@ def guardian(limit=10):
         ])
     ]
 
-    articles = aggregate_articles(headline_articles)
+    articles = aggregate_articles(headline_articles, source=src)
     
     return articles[:limit]
