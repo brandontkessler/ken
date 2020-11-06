@@ -22,6 +22,7 @@ def compile_articles(newssites, limit_per_site=10):
 
 
 def cli_exec(compiled_articles):
+    user_add = ['y', 'yes', 'ya', 'yeah', 'ok']
     user_skip = ['n', 'no', 'nah', 'pass', 'skip']
     user_back = ['back', 'undo']
 
@@ -30,9 +31,9 @@ def cli_exec(compiled_articles):
     print('-> DIRECTIONS <-')
     print('Each article will be displayed one by one.')
     print('Provide input in the command line and hit enter based on the following instructions:')
+    print(f'* To add an article, provide: {user_add} or just hit Enter')
     print(f'* To pass an on article, provide: {user_skip}')
     print(f'* To go back on an article that was passed on, provide: {user_back}')
-    print('* To add an article, provide any other input or no input at all.')
     print('\nReady? [Hit enter to continue]')
     input()
     print('######### STARTING AUTOPOCKET ##########\n')
@@ -45,7 +46,10 @@ def cli_exec(compiled_articles):
         print(f'\n-> {article.source} -- {article.title}')
         decision = input('Do you want to add this to pocket?\n').lower()
 
-        if decision in user_skip:
+        if decision in user_add or decision == '':
+            pocket.add_article(article.url, article.title)
+            print('\n######### ADDED TO POCKET ##########\n')
+        elif decision in user_skip:
             print('\n######### SKIPPED ##########\n')
             passed_articles.append(article)
         elif decision in user_back:
@@ -58,8 +62,8 @@ def cli_exec(compiled_articles):
                 print('\n######### NO ARTICLES TO GO BACK TO ##########\n')
                 articles.appendleft(article)
         else:
-            pocket.add_article(article.url, article.title)
-            print('\n######### ADDED TO POCKET ##########\n')
+            print("\nUnable to register command, try again:\n")
+            articles.appendleft(article)
 
         if len(articles) == 0: 
             print("\n######### NO MORE ARTICLES ##########\n")
