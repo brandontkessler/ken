@@ -25,6 +25,7 @@ def cli_exec(compiled_articles):
     user_add = ['y', 'yes', 'ya', 'yeah', 'ok']
     user_skip = ['n', 'no', 'nah', 'pass', 'skip']
     user_back = ['back', 'undo']
+    user_quit = ['quit', 'exit']
 
     print('\nCompiling articles for AutoPocket\n')
     articles = deque(compiled_articles)
@@ -34,6 +35,7 @@ def cli_exec(compiled_articles):
     print(f'* To add an article, provide: {user_add} or just hit Enter')
     print(f'* To pass an on article, provide: {user_skip}')
     print(f'* To go back on an article that was passed on, provide: {user_back}')
+    print(f'* To quit the program: {user_quit}')
     print('\nReady? [Hit enter to continue]')
     input()
     print('######### STARTING AUTOPOCKET ##########\n')
@@ -46,7 +48,10 @@ def cli_exec(compiled_articles):
         print(f'\n-> {article.source} -- {article.title}')
         decision = input('Do you want to add this to pocket?\n').lower()
 
-        if decision in user_add or decision == '':
+        if decision in user_quit:
+            print("EXITING PROGRAM")
+            break
+        elif decision in user_add or decision == '':
             pocket.add_article(article.url, article.title)
             print('\n######### ADDED TO POCKET ##########\n')
         elif decision in user_skip:
