@@ -32,8 +32,8 @@ def cli_exec(compiled_articles):
     print('-> DIRECTIONS <-')
     print('Each article will be displayed one by one.')
     print('Provide input in the command line and hit enter based on the following instructions:')
-    print(f'* To add an article, provide: {user_add} or just hit Enter')
-    print(f'* To pass an on article, provide: {user_skip}')
+    print(f'* To add an article, provide: {user_add}')
+    print(f'* To pass an on article, provide: {user_skip} or just hit Enter')
     print(f'* To go back on an article that was passed on, provide: {user_back}')
     print(f'* To quit the program: {user_quit}')
     print('\nReady? [Hit enter to continue]')
@@ -51,10 +51,10 @@ def cli_exec(compiled_articles):
         if decision in user_quit:
             print("EXITING PROGRAM")
             break
-        elif decision in user_add or decision == '':
+        elif decision in user_add:
             pocket.add_article(article.url, article.title)
             print('\n######### ADDED TO POCKET ##########\n')
-        elif decision in user_skip:
+        elif decision in user_skip or decision == '':
             print('\n######### SKIPPED ##########\n')
             passed_articles.append(article)
         elif decision in user_back:
