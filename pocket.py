@@ -99,11 +99,11 @@ class AutoPocket:
         auth = requests.get('https://getpocket.com/v3/oauth/authorize', params=payload)
         access_token = auth.content.decode('utf-8').split('&')[0].split('=')[1]
 
-        with open('.\config.json', 'r') as f:
+        with open('./config.json', 'r') as f:
             keys = json.load(f)
             keys['ACCESS_TOKEN'] = access_token
         
-        with open('.\config.json', 'w') as f:
+        with open('./config.json', 'w') as f:
             json.dump(keys, f, indent=4)
 
         print('\n-> Pocket is now configured. <-\n')
