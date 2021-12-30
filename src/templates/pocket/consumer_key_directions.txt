@@ -1,0 +1,23 @@
+<><><> GET CONSUMER KEY <><><>
+
+If already created an app:
+
+1. Open a browser at following URL: https://getpocket.com/developer/
+2. Click 'My Apps'
+3. Copy the consumer key and paste below.
+4. Press enter to continue.
+
+---
+
+If an app has not been created yet:
+
+1. Open a browser at following URL: https://getpocket.com/developer/
+2. Click 'CREATE NEW APP'
+3. Name your application 'ken'
+4. Enter description as 'ken reader'
+5. For permissions, check: Add, Modify, and Retrieve
+6. For Platforms, check: Desktop (other)
+7. Check the box for 'I accept the Terms of Service'
+8. Click 'CREATE APPLICATION'
+9. Copy the consumer key and paste below.
+10. Press enter to continue

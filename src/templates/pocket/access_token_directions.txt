@@ -1,0 +1,6 @@
+<><><> GET ACCESS TOKEN <><><>
+
+1. Open a browser at following URL: <url>
+2. Click Authorize
+3. You will be redirected to a gif (close browser)
+3. Go back to command line and press enter to continue
