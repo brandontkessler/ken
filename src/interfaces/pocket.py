@@ -1,8 +1,6 @@
 import os
 from builtins import input
 import requests
-import json
-import time
 import yaml
 
 class Pocket:
