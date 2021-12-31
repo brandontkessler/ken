@@ -1,3 +1,15 @@
+subscriptions:
+  chess: false
+  economist: false
+  guardian: false
+  vice: false
+  vox: false
+
+# (optional) interface utilizing pocket api to add articles for read later
 pocket:
   consumer_key: # <consumer key>
   access_token: # <access token>
+
+# (optional) interface utilizing send to kindle email address
+kindle:
+  send_to_kindle_email: # <email address>
