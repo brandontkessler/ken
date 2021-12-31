@@ -3,10 +3,11 @@ from builtins import input
 import requests
 import yaml
 from src.interfaces.abc import AbstractBaseInterface
+from src.helpers import config_funcs as cfg
 
 class Pocket(AbstractBaseInterface):
     def __init__(self):
-        self._pocket_cfg = self.get_kenfile().get('pocket')
+        self._pocket_cfg = cfg.get_state().get('pocket')
         self._api_url = 'https://getpocket.com/v3'
 
         if self._test_api_connection() != 200:
@@ -19,20 +20,20 @@ class Pocket(AbstractBaseInterface):
     # -------- API KEY CONFIGURATIONS -------- #
     # ---------------------------------------- #
     def _configure_consumer_key(self):
-        '''Checks if consumer key already exists in Kenfile.
-        If not, provides directions for creation and adds to Kenfile.
+        '''Checks if consumer key already exists in state.
+        If not, provides directions for creation and adds to state.
         '''
 
         if self._pocket_cfg.get('consumer_key') is None:
-            with open('src/templates/pocket/consumer_key_directions.txt', 'r') as f:
+            with open(os.path.join('src', 'templates', 'pocket', 
+                                   'consumer_key_directions.txt'), 'r') as f:
                 print(f.read())
 
             consumer_key = input("\nPaste consumer key here and hit enter:\n> ")
-            
-            with open('Kenfile', 'w') as kenfile:
-                self._kenfile['pocket']['consumer_key'] = consumer_key.strip()
-                self._pocket_cfg['consumer_key'] = consumer_key.strip()
-                yaml.dump(self._kenfile, kenfile, default_flow_style=False)
+
+            self._pocket_cfg['consumer_key'] = consumer_key.strip()
+            cfg.edit_state('pocket', 'consumer_key', consumer_key.strip())
+
             print('Finished configuring consumer key\n')
         else:
             print('Consumer key already configured')
@@ -88,7 +89,7 @@ class Pocket(AbstractBaseInterface):
 
     def _get_access_token(self, request_token):
         '''Generates access token upon user authorization and adds to
-        the Kenfile.
+        the state.
         '''
         key = self._pocket_cfg.get('consumer_key')
         redirect_uri = 'https://giphy.com/gifs/zCME2Cd20Czvy/fullscreen'
@@ -96,7 +97,9 @@ class Pocket(AbstractBaseInterface):
                     f'request_token={request_token}&' +\
                     f'redirect_uri={redirect_uri}'
 
-        with open('src/templates/pocket/access_token_directions.txt', 'r') as f:
+
+        with open(os.path.join('src', 'templates', 'pocket',
+                               'access_token_directions.txt'), 'r') as f:
             token_directions = f.read().replace('<url>', auth_url)
             print(token_directions)
 
@@ -107,13 +110,11 @@ class Pocket(AbstractBaseInterface):
                                     'code': request_token})
 
         access_token = auth.content.decode('utf-8').split('&')[0].split('=')[1]
+        self._pocket_cfg['access_token'] = access_token.strip()
 
-        with open('Kenfile', 'w') as kenfile:
-            self._kenfile['pocket']['access_token'] = access_token.strip()
-            self._pocket_cfg['access_token'] = access_token.strip()
-            yaml.dump(self._kenfile, kenfile, default_flow_style=False)
+        cfg.edit_state('pocket', 'access_token', access_token.strip())
         
-        print('Access token generated and added to Kenfile')
+        print('Access token generated and added to state')
         return
 
     # ---------------------------------------- #
@@ -146,7 +147,7 @@ class Pocket(AbstractBaseInterface):
 if __name__=='__main__':
     pkt = Pocket()
     pkt.get_articles(2)
-    pkt.reset_kenfile()
+
     # url = 'https://www.ft.com/content/b2f861ad-74e7-4ce9-8449-f8bb22053596'
     # title = 'Global equities suffer worst week since March'
     # pkt.add_article(url, title)
