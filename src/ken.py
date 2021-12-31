@@ -1,23 +1,18 @@
 from collections import deque
 
-from src.interfaces.pocket import Pocket
+from src.interfaces import pocket as pkt
+from src import crawlers as crwl
 
-from src.crawlers.guardian import guardian
-from src.crawlers.vice import vice
-from src.crawlers.chess import chess
-from src.crawlers.economist import economist
-from src.crawlers.vox import vox
-
-pocket = Pocket()
+pocket = pkt.Pocket()
 
 
 def compile_articles(newssites, limit_per_site=10):
     compiled_articles = []
-    if 'vox' in newssites: compiled_articles += vox(limit_per_site)
-    if 'economist' in newssites: compiled_articles += economist(limit_per_site)
-    if 'chess' in newssites: compiled_articles += chess(limit_per_site)
-    if 'vice' in newssites: compiled_articles += vice(limit_per_site)
-    if 'guardian' in newssites: compiled_articles += guardian(limit_per_site)
+    if 'vox' in newssites: compiled_articles += crwl.vox(limit_per_site)
+    if 'economist' in newssites: compiled_articles += crwl.economist(limit_per_site)
+    if 'chess' in newssites: compiled_articles += crwl.chess(limit_per_site)
+    if 'vice' in newssites: compiled_articles += crwl.vice(limit_per_site)
+    if 'guardian' in newssites: compiled_articles += crwl.guardian(limit_per_site)
     return compiled_articles
 
 
