@@ -1,0 +1,10 @@
+Each article will be displayed one by one. 
+Provide one of the following:
+
+commands
+---------------------------------------------------
+- add       adds article to chosen interface
+- skip      skips current article and moves to next
+- back      goes to previous article
+- quit      exits program
+- help      show instructions again

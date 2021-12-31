@@ -13,3 +13,6 @@ pocket:
 # (optional) interface utilizing send to kindle email address
 kindle:
   send_to_kindle_email: # <email address>
+
+settings:
+  articles_per_site_limit: 10 # number of articles per site
