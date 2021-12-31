@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from .helpers import aggregate_articles
+from src.crawlers.helpers.aggregate_articles import aggregate_articles
 
 
 def vice(limit=10):

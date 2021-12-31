@@ -110,8 +110,8 @@ class Pocket(AbstractBaseInterface):
                                     'code': request_token})
 
         access_token = auth.content.decode('utf-8').split('&')[0].split('=')[1]
+        
         self._pocket_cfg['access_token'] = access_token.strip()
-
         cfg.edit_state('pocket', 'access_token', access_token.strip())
         
         print('Access token generated and added to state')

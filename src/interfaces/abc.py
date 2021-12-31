@@ -12,4 +12,3 @@ class AbstractBaseInterface(ABC):
 
 if __name__=='__main__':
     interface = AbstractInterface()
-    interface.reset_kenfile()
