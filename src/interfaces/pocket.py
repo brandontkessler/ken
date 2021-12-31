@@ -2,13 +2,11 @@ import os
 from builtins import input
 import requests
 import yaml
+from src.interfaces.abc import AbstractBaseInterface
 
-class Pocket:
+class Pocket(AbstractBaseInterface):
     def __init__(self):
-        with open('Kenfile', 'r') as kenstream:
-            self._kenfile = yaml.safe_load(kenstream)
-            self._pocket_cfg = self._kenfile.get('pocket')
-
+        self._pocket_cfg = self.get_kenfile().get('pocket')
         self._api_url = 'https://getpocket.com/v3'
 
         if self._test_api_connection() != 200:
@@ -148,6 +146,7 @@ class Pocket:
 if __name__=='__main__':
     pkt = Pocket()
     pkt.get_articles(2)
+    pkt.reset_kenfile()
     # url = 'https://www.ft.com/content/b2f861ad-74e7-4ce9-8449-f8bb22053596'
     # title = 'Global equities suffer worst week since March'
     # pkt.add_article(url, title)

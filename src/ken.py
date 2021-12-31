@@ -1,14 +1,14 @@
 from collections import deque
 
-from pocket import AutoPocket
+from src.interfaces.pocket import Pocket
 
-from crawlers.guardian import guardian
-from crawlers.vice import vice
-from crawlers.chess import chess
-from crawlers.economist import economist
-from crawlers.vox import vox
+from src.crawlers.guardian import guardian
+from src.crawlers.vice import vice
+from src.crawlers.chess import chess
+from src.crawlers.economist import economist
+from src.crawlers.vox import vox
 
-pocket = AutoPocket()
+pocket = Pocket()
 
 
 def compile_articles(newssites, limit_per_site=10):
