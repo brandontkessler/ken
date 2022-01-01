@@ -9,7 +9,7 @@ def get_kenfig():
 
 
 def reset_kenfig():
-    shutil.copyfile('templates/kenfile.yaml', 'Kenfig')
+    shutil.copyfile(os.path.join('templates', 'kenfile.yaml'), 'Kenfig')
 
 
 def set_state(path=os.path.join(os.path.expanduser('~'), '.ken')):

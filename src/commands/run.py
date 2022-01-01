@@ -2,7 +2,7 @@ import os
 import sys
 from collections import deque
 import click
-from src.helpers import config_funcs as cf
+from src.utils import config_funcs as cf
 from src.commands.helpers import compile_articles
 
 @click.command(no_args_is_help=False)
@@ -10,8 +10,10 @@ from src.commands.helpers import compile_articles
               default=os.path.join(os.path.expanduser('~'), '.ken', 'state'))
 def run(state_path):
     state = cf.get_state(state_path)
+
+    interfaces = [k for k,v in state['interface'].items() if v is True]
     
-    instructions = os.path.join('src', 'templates', 'ken', 'instructions.txt')
+    instructions = os.path.join('src', 'static', 'ken', 'instructions.txt')
     with open(instructions, 'r') as f:
         click.echo(f'\n{f.read()}')
 
@@ -29,12 +31,12 @@ def run(state_path):
         click.echo(f'article: {article.title}')
 
         command = click.prompt('command')
-        run_factory(command, article, instructions)
+        run_factory(interfaces, article, command, instructions, articles, skipped_articles)
 
         if len(articles) == 0: break
 
 
-def run_factory(command, article, instructions):
+def run_factory(interfaces, article, command, instructions, articles, skipped_articles):
     if command == 'help':
         click.echo('\n')
         with open(instructions, 'r') as f:
@@ -44,57 +46,31 @@ def run_factory(command, article, instructions):
         click.echo(f'\nfrom: {article.source}')
         click.echo(f'article: {article.title}')
         command = click.prompt('command')
-        return run_factory(command, article, instructions)
+        run_factory(interfaces, article, command, instructions, articles, skipped_articles)
 
     elif command == 'quit':
         sys.exit('Aborted!')
     
     elif command == 'add':
-        pass
-    
+        for interface in interfaces:
+            interface.add_article(article.url, article.title)
+        click.echo('added')
+
     elif command == 'skip':
-        pass
+        skipped_articles.append(article)
+        click.echo('skipped')
     
     elif command == 'back':
-        pass
+        if len(skipped_articles) > 0:
+            prev_article = skipped_articles.pop()
+            articles.appendleft(article)
+            articles.appendleft(prev_article)
+        else:
+            articles.appendleft(article)
+            click.echo('no previous articles')
     
     else:
         click.echo('\nunrecognized command - select from the following', nl=False)
-        return run_factory('help', article, instructions)
+        run_factory(interfaces, article, 'help', instructions, articles, skipped_articles)
 
-
-
-# while True:
-#     print('This is the last article') if len(articles) == 1 else print(f'There are {len(articles)} articles left.')
-
-#     article = articles.popleft()
-#     print(f'\n-> {article.source} -- {article.title}')
-#     decision = input('Do you want to add this to pocket?\n').lower()
-
-#     if decision in user_quit:
-#         print("EXITING PROGRAM")
-#         break
-#     elif decision in user_add:
-#         pocket.add_article(article.url, article.title)
-#         print('\n######### ADDED TO POCKET ##########\n')
-#     elif decision in user_skip or decision == '':
-#         print('\n######### SKIPPED ##########\n')
-#         passed_articles.append(article)
-#     elif decision in user_back:
-#         if len(passed_articles) > 0:
-#             print('\n######### BACK ##########\n')
-#             prior_article = passed_articles.pop()
-#             articles.appendleft(article)
-#             articles.appendleft(prior_article)
-#         else:
-#             print('\n######### NO ARTICLES TO GO BACK TO ##########\n')
-#             articles.appendleft(article)
-#     else:
-#         print("\nUnable to register command, try again:\n")
-#         articles.appendleft(article)
-
-#     if len(articles) == 0: 
-#         print("\n######### NO MORE ARTICLES ##########\n")
-#         print("-> Thanks for using AutoPocket <-\n\n")
-#         break
-
+    return

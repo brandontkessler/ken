@@ -1,5 +1,5 @@
 import click
-from src.helpers import config_funcs as cf
+from src.utils import config_funcs as cf
 from src.commands.helpers import list_subscriptions
 
 @click.command(no_args_is_help=True)

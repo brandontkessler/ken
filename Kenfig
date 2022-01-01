@@ -1,3 +1,7 @@
+interface:
+  pocket: false
+  kindle: false
+
 subscriptions:
   chess: false
   economist: false

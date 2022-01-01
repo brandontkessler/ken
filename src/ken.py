@@ -29,13 +29,4 @@ def ken():
 
 
 if __name__ == '__main__':
-    # newssites = [
-    #     # 'vox',
-    #     'economist',
-    #     'guardian',
-    #     # 'vice',
-    #     'chess',
-    # ]
-    # articles = compile_articles(newssites, limit_per_site=20)
-    # cli_exec(articles)
     ken()

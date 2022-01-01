@@ -3,7 +3,7 @@ from builtins import input
 import requests
 import yaml
 from src.interfaces.abc import AbstractBaseInterface
-from src.helpers import config_funcs as cfg
+from src.utils import config_funcs as cfg
 
 class Pocket(AbstractBaseInterface):
     def __init__(self):
@@ -25,7 +25,7 @@ class Pocket(AbstractBaseInterface):
         '''
 
         if self._pocket_cfg.get('consumer_key') is None:
-            with open(os.path.join('src', 'templates', 'pocket', 
+            with open(os.path.join('src', 'static', 'pocket', 
                                    'consumer_key_directions.txt'), 'r') as f:
                 print(f.read())
 
@@ -98,7 +98,7 @@ class Pocket(AbstractBaseInterface):
                     f'redirect_uri={redirect_uri}'
 
 
-        with open(os.path.join('src', 'templates', 'pocket',
+        with open(os.path.join('src', 'static', 'pocket',
                                'access_token_directions.txt'), 'r') as f:
             token_directions = f.read().replace('<url>', auth_url)
             print(token_directions)

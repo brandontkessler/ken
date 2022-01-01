@@ -1,6 +1,6 @@
 import os
 import click
-from src.helpers import config_funcs as cf
+from src.utils import config_funcs as cf
 from src import crawlers as crwl
 
 def list_subscriptions(list_):
